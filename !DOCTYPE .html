@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王韬媛 | HR实习生涯 - 在人与组织的交汇处</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&family=LXGW+WenKai:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --cream: #FDF8F3;
+            --warm-beige: #F5F0E8;
+            --apricot: #F4A261;
+            --apricot-light: #FADFC6;
+            --sage: #87A878;
+            --brown: #5D4037;
+            --brown-light: #8D6E63;
+            --warm-gray: #A1887F;
+        }
+        
+        body {
+            font-family: 'Inter', 'LXGW WenKai', sans-serif;
+            background-color: var(--cream);
+            color: var(--brown);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+        
+        .font-serif-cn { font-family: 'Noto Serif SC', 'LXGW WenKai', serif; }
+        .font-wenkai { font-family: 'LXGW WenKai', serif; }
+        
+        /* Paper texture overlay */
+        .paper-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+        }
+        
+        /* Warm gradient text */
+        .gradient-warm {
+            background: linear-gradient(135deg, #F4A261 0%, #E76F51 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Soft cards */
+        .soft-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(244, 162, 97, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .soft-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(244, 162, 97, 0.15);
+            border-color: rgba(244, 162, 97, 0.3);
+        }
+        
+        /* Methodology reveal */
+        .methodology-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-out;
+            opacity: 0;
+        }
+        
+        .soft-card:hover .methodology-content {
+            max-height: 250px;
+            opacity: 1;
+            margin-top: 1rem;
+        }
+        
+        /* Hand-drawn underline */
+        .hand-drawn {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hand-drawn::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q 25 10, 50 5 T 100 5' stroke='%23F4A261' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat center;
+            background-size: 100% 100%;
+            opacity: 0.6;
+        }
+        
+        /* Organic shapes */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        
+        /* Gentle tag animation */
+        .gentle-tag {
+            animation: gentle-float 8s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.7s);
+        }
+        
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(1deg); }
+        }
+        
+        /* Custom scrollbar - warm tones */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--warm-beige);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--apricot);
+            border-radius: 5px;
+            border: 2px solid var(--warm-beige);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #E76F51;
+        }
+        
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        
+        /* Quote styling */
+        .warm-quote {
+            border-left: 3px solid var(--apricot);
+            background: linear-gradient(to right, rgba(244, 162, 97, 0.08), transparent);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: var(--brown-light);
+        }
+        
+        /* Timeline gentle */
+        .timeline-dot {
+            box-shadow: 0 0 0 4px rgba(244, 162, 97, 0.2);
+        }
+        
+        /* Button warm styles */
+        .btn-warm {
+            background: linear-gradient(135deg, #F4A261 0%, #E76F51 100%);
+            color: white;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(244, 162, 97, 0.3);
+        }
+        
+        .btn-warm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(244, 162, 97, 0.4);
+        }
+        
+        .btn-ghost {
+            border: 2px solid var(--apricot);
+            color: var(--apricot);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-ghost:hover {
+            background: var(--apricot);
+            color: white;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-orange-200 selection:text-amber-900">
+
+    <div class="paper-texture"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 bg-[#FDF8F3]/90 backdrop-blur-md border-b border-orange-100 transition-all duration-300" id="navbar">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-wenkai font-bold text-2xl tracking-wide text-[#5D4037]">
+                王韬媛<span class="text-[#F4A261]">.</span>HR
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-[#8D6E63]">
+                <a href="#methodology" class="hover:text-[#F4A261] transition-colors">方法论</a>
+                <a href="#philosophy" class="hover:text-[#F4A261] transition-colors">职业思考</a>
+                <a href="#capabilities" class="hover:text-[#F4A261] transition-colors">能力模型</a>
+            </div>
+            <a href="https://cdn.jsdelivr.net/gh/Ariaaa-652/resume/王韬媛-华南理工大学-应聘HR.pdf" 
+               download 
+               class="px-6 py-2.5 bg-[#F4A261] hover:bg-[#E76F51] text-white rounded-full text-sm font-semibold transition-all hover:scale-105 shadow-md shadow-orange-200">
+                下载简历
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden">
+        <!-- Organic background blobs -->
+        <div class="blob w-96 h-96 bg-[#FADFC6] top-20 -left-20" style="animation-delay: 0s;"></div>
+        <div class="blob w-80 h-80 bg-[#E8F5E9] bottom-20 -right-20" style="animation-delay: -7s;"></div>
+        <div class="blob w-64 h-64 bg-[#FFF3E0] top-1/2 left-1/3" style="animation-delay: -14s;"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+            <div class="mb-8 inline-block">
+                <span class="px-5 py-2 rounded-full bg-white/60 border border-[#F4A261]/30 text-[#E76F51] text-sm font-medium tracking-wide font-wenkai">
+                    🌱 HR Intern @ 猿辅导
+                </span>
+            </div>
+            
+            <h1 class="font-serif-cn text-4xl md:text-6xl font-bold leading-tight mb-8 tracking-tight text-[#5D4037] hero-title">
+                在人与组织的交汇处，<br>
+                <span class="gradient-warm hand-drawn">种下连接的种子</span>
+            </h1>
+            
+            <p class="font-wenkai italic text-xl md:text-2xl text-[#8D6E63] mb-10 max-w-2xl mx-auto leading-relaxed hero-subtitle">
+                我相信，好的HR不是筛选简历的机器，<br>而是人才与机遇的策展人
+            </p>
+        </div>
+    </section>
+
+    <!-- Data Overview -->
+    <section class="py-24 relative" id="metrics">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="font-serif-cn text-3xl md:text-4xl font-bold mb-4 text-[#5D4037]">
+                    数字背后，是<span class="text-[#F4A261]">每一次真诚的对话</span>
+                </h2>
+                <p class="text-[#8D6E63] font-wenkai">不只是执行，更是系统化思考与持续优化</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="soft-card p-8 section-reveal group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-[#FADFC6] flex items-center justify-center mb-6 text-2xl">
+                        📋
+                    </div>
+                    <div class="text-5xl font-serif-cn font-bold text-[#F4A261] mb-2 counter" data-target="2000">0</div>
+                    <div class="text-[#8D6E63] mb-4 font-medium">份简历筛选</div>
+                    <h3 class="text-xl font-bold text-[#5D4037] mb-3 group-hover:text-[#F4A261] transition-colors">人才寻访</h3>
+                    <p class="text-[#8D6E63] text-sm leading-relaxed">
+                        在高压环境下建立快速判断框架，确保高效且精准
+                    </p>
+                    <div class="methodology-content text-sm text-[#5D4037] border-t border-[#F4A261]/20 pt-4">
+                        <span class="text-[#E76F51] font-semibold font-wenkai">「3秒标签法」：</span>
+                        硬性条件（1秒）+ 经历匹配度（1秒）+ 潜力信号（1秒）。不追求绝对精准，而追求高效不漏，在2000+简历中快速识别高潜候选人。
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="soft-card p-8 section-reveal group cursor-pointer" style="transition-delay: 0.1s">
+                    <div class="w-14 h-14 rounded-2xl bg-[#E8F5E9] flex items-center justify-center mb-6 text-2xl">
+                        🤝
+                    </div>
+                    <div class="flex items-baseline gap-2 mb-2">
+                        <span class="text-4xl font-serif-cn font-bold text-[#87A878] counter" data-target="400">0</span>
+                        <span class="text-[#A1887F]">→</span>
+                        <span class="text-4xl font-serif-cn font-bold text-[#87A878] counter" data-target="40">0</span>
+                    </div>
+                    <div class="text-[#8D6E63] mb-4 font-medium">电话邀约 → 到面转化</div>
+                    <h3 class="text-xl font-bold text-[#5D4037] mb-3 group-hover:text-[#87A878] transition-colors">精准邀约转化</h3>
+                    <p class="text-[#8D6E63] text-sm leading-relaxed">
+                        温度破冰术，让每一次通话都成为雇主品牌的第一次触达
+                    </p>
+                    <div class="methodology-content text-sm text-[#5D4037] border-t border-[#87A878]/20 pt-4">
+                        <span class="text-[#87A878] font-semibold font-wenkai">「温度破冰术」：</span>
+                        30秒内传递三个信号：尊重、专业、期待。转化率不仅是数字，更是候选人对企业的第一印象投票。善用文字沟通把握候选人意向。
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="soft-card p-8 section-reveal group cursor-pointer" style="transition-delay: 0.2s">
+                    <div class="w-14 h-14 rounded-2xl bg-[#FFF3E0] flex items-center justify-center mb-6 text-2xl">
+                        🎯
+                    </div>
+                    <div class="text-5xl font-serif-cn font-bold text-[#E76F51] mb-2 counter" data-target="15">0</div>
+                    <div class="text-[#8D6E63] mb-4 font-medium">场面试主持</div>
+                    <h3 class="text-xl font-bold text-[#5D4037] mb-3 group-hover:text-[#E76F51] transition-colors">面试场域掌控</h3>
+                    <p class="text-[#8D6E63] text-sm leading-relaxed">
+                        结构化+追问双引擎，还原候选人真实状态
+                    </p>
+                    <div class="methodology-content text-sm text-[#5D4037] border-t border-[#E76F51]/20 pt-4">
+                        <span class="text-[#E76F51] font-semibold font-wenkai">「行为追问法」：</span>
+                        标准化问题保证公平，但真正的洞察来自追问。在候选人放松警惕时，用「当时具体是怎么做的？」替代「你会怎么做？」，捕捉真实行为痕迹。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Award Badge -->
+            <div class="mt-12 flex justify-center section-reveal">
+                <div class="soft-card rounded-2xl px-8 py-6 flex items-center gap-4 border-[#F4A261]/30 bg-gradient-to-r from-[#FADFC6]/50 to-white/50">
+                    <div class="text-4xl">🏆</div>
+                    <div>
+                        <div class="font-serif-cn font-bold text-[#5D4037] text-lg">广州课程顾问类招聘最欢迎BOSS第2名</div>
+                        <div class="text-sm text-[#8D6E63] font-wenkai">专业度与亲和力的双重认可</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Dimensions -->
+    <section class="py-24 bg-white/50 relative" id="methodology">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#FADFC6]/30 to-transparent"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 section-reveal">
+                <h2 class="font-serif-cn text-3xl md:text-4xl font-bold mb-4 text-[#5D4037]">
+                    三维能力<span class="text-[#F4A261]">体系</span>
+                </h2>
+                <p class="text-[#8D6E63] font-wenkai max-w-2xl mx-auto">
+                    从全链路演进到雇主品牌，再到渠道生态，<br>属于我的HR方法论地图
+                </p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Dimension 1 -->
+                <div class="soft-card p-8 md:p-10 section-reveal border-l-4 border-l-[#F4A261]">
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="md:w-1/4">
+                            <div class="text-[#F4A261] font-serif-cn font-bold text-6xl opacity-20 mb-2">01</div>
+                            <h3 class="text-2xl font-bold text-[#5D4037] font-serif-cn">全链路招聘运营</h3>
+                            <p class="text-[#F4A261] font-medium mt-1 text-sm">Recruitment Operations</p>
+                        </div>
+                        <div class="md:w-3/4 space-y-4">
+                            <p class="text-[#5D4037] leading-relaxed">
+                                从「筛简历」到「搭团队」的闭环思维。不只是执行，而是持续优化。发现应届生稳定性较弱，主动设计<span class="text-[#F4A261] font-semibold">「压力提问+求职意向度考核」</span>，降低入职流失率。
+                            </p>
+                            
+                            <div class="warm-quote mt-4 text-sm">
+                                "招聘是HR的基本功，但基本功做到极致就是竞争力。我不满足于「完成KPI」，而是追求「每个环节能不能再优化」。"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimension 2 -->
+                <div class="soft-card p-8 md:p-10 section-reveal border-l-4 border-l-[#87A878]" style="transition-delay: 0.1s">
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="md:w-1/4">
+                            <div class="text-[#87A878] font-serif-cn font-bold text-6xl opacity-20 mb-2">02</div>
+                            <h3 class="text-2xl font-bold text-[#5D4037] font-serif-cn">雇主品牌建设</h3>
+                            <p class="text-[#87A878] font-medium mt-1 text-sm">Employer Branding</p>
+                        </div>
+                        <div class="md:w-3/4 space-y-4">
+                            <p class="text-[#5D4037] leading-relaxed">
+                                把「摆摊」做成「品牌快闪」。宣传内容不搞「公司介绍八股文」，而是用<span class="text-[#87A878] font-semibold">「学长学姐真实入职故事+数据可视化成长路径」</span>，让候选人一眼看到「我来这里会变成什么样」。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="px-4 py-2 bg-[#E8F5E9] text-[#87A878] rounded-full text-sm font-wenkai">故事化叙事</span>
+                                <span class="px-4 py-2 bg-[#E8F5E9] text-[#87A878] rounded-full text-sm font-wenkai">简历诊断</span>
+                                <span class="px-4 py-2 bg-[#E8F5E9] text-[#87A878] rounded-full text-sm font-wenkai">拒绝变连接</span>
+                            </div>
+                            <div class="warm-quote mt-4 text-sm border-l-[#87A878] bg-[#E8F5E9]/30">
+                                "校招不是人海战术，是品牌种草。每一次对话都是雇主品牌的微雕。HR个人IP就是企业IP的投射。"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimension 3 -->
+                <div class="soft-card p-8 md:p-10 section-reveal border-l-4 border-l-[#E76F51]" style="transition-delay: 0.2s">
+                    <div class="flex flex-col md:flex-row gap-6 items-start">
+                        <div class="md:w-1/4">
+                            <div class="text-[#E76F51] font-serif-cn font-bold text-6xl opacity-20 mb-2">03</div>
+                            <h3 class="text-2xl font-bold text-[#5D4037] font-serif-cn">渠道生态运营</h3>
+                            <p class="text-[#E76F51] font-medium mt-1 text-sm">Channel Management</p>
+                        </div>
+                        <div class="md:w-3/4 space-y-4">
+                            <p class="text-[#5D4037] leading-relaxed">
+                                把BOSS直聘当成产品来运营。分析候选人的求职 urgency，调整沟通话术：<span class="text-[#E76F51] font-semibold">急切的直接推岗位，观望的建立长期联系</span>。
+                            </p>
+                            <div class="grid sm:grid-cols-3 gap-4 mt-4">
+                                <div class="text-center p-4 bg-[#FFF3E0]/50 rounded-xl">
+                                    <div class="text-2xl mb-2">🎯</div>
+                                    <div class="text-sm font-semibold text-[#5D4037]">用户分层</div>
+                                    <div class="text-xs text-[#8D6E63] mt-1">按 urgency 分级运营</div>
+                                </div>
+                                <div class="text-center p-4 bg-[#FFF3E0]/50 rounded-xl">
+                                    <div class="text-2xl mb-2">✍️</div>
+                                    <div class="text-sm font-semibold text-[#5D4037]">内容优化</div>
+                                    <div class="text-xs text-[#8D6E63] mt-1">JD亮点重构</div>
+                                </div>
+                                <div class="text-center p-4 bg-[#FFF3E0]/50 rounded-xl">
+                                    <div class="text-2xl mb-2">🌱</div>
+                                    <div class="text-sm font-semibold text-[#5D4037]">账号保养</div>
+                                    <div class="text-xs text-[#8D6E63] mt-1">摸清账号流量偏好</div>
+                                </div>
+                            </div>
+                            <div class="warm-quote mt-4 text-sm border-l-[#E76F51] bg-[#FFF3E0]/30">
+                                "渠道运营的本质是流量思维+用户运营的杂交。我要让算法喜欢我，更让候选人记住我。"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="py-24 relative" id="philosophy">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-12 items-start">
+                <div class="md:col-span-5 section-reveal">
+                    <h2 class="font-serif-cn text-4xl md:text-5xl font-bold leading-tight sticky top-32 text-[#5D4037]">
+                        HR 不是行政，<br>
+                        是组织的<br>
+                        <span class="text-[#F4A261]">「架构师」</span><br>
+                        与「赋能者」
+                    </h2>
+                </div>
+                
+                <div class="md:col-span-7 space-y-8 section-reveal">
+                    <div class="prose prose-lg max-w-none">
+                        <p class="text-[#5D4037] leading-relaxed text-lg">
+                            很多人以为HR是「管人的后勤」，但我在猿辅导的实习中看到了HR的<span class="text-[#F4A261] font-semibold">商业价值</span>：当我在筛简历时，我是在帮业务leader节省时间；当我在做校招品牌时，我是在降低企业的获客成本；当我在优化面试流程时，我是在提升组织的决策效率。
+                        </p>
+                        
+                        <p class="text-[#8D6E63] leading-relaxed">
+                            HR是离业务最近的支持部门，也是组织健康的守门人。
+                        </p>
+
+                        <div class="my-8 p-6 bg-white rounded-2xl shadow-sm border border-[#F4A261]/10">
+                            <h3 class="text-xl font-bold text-[#5D4037] mb-4 font-serif-cn">我的HR价值观</h3>
+                            <p class="text-[#5D4037] mb-4">我认为好的HR应该有三个面孔：</p>
+                            <ul class="space-y-3 text-[#5D4037]">
+                                <li class="flex items-start gap-3">
+                                    <span class="w-8 h-8 rounded-full bg-[#FADFC6] flex items-center justify-center text-[#F4A261] font-bold text-sm shrink-0">01</span>
+                                    <span><span class="font-semibold">理性面孔：</span>用数据说话，懂业务逻辑，算得清人力成本与ROI</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-8 h-8 rounded-full bg-[#E8F5E9] flex items-center justify-center text-[#87A878] font-bold text-sm shrink-0">02</span>
+                                    <span><span class="font-semibold">感性面孔：</span>对员工有共情，能感知组织情绪，做「人」的连接器</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="w-8 h-8 rounded-full bg-[#FFF3E0] flex items-center justify-center text-[#E76F51] font-bold text-sm shrink-0">03</span>
+                                    <span><span class="font-semibold">设计师面孔：</span>把流程当产品打磨，把制度当体验设计，拒绝官僚主义</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p class="text-[#8D6E63] leading-relaxed italic border-l-2 border-[#F4A261] pl-4">
+                            这段实习让我确认，我享受在「理性与感性」之间找平衡的状态。
+                        </p>
+                    </div>
+
+                    <!-- Career Path -->
+                    <div class="mt-12 pt-8 border-t border-[#F4A261]/20">
+                        <h3 class="text-2xl font-bold mb-6 font-serif-cn text-[#5D4037]">清晰的职业路径</h3>
+                        <div class="space-y-6">
+                            <div class="flex gap-4 group">
+                                <div class="w-12 h-12 rounded-full bg-[#FADFC6] flex items-center justify-center text-[#F4A261] font-bold shrink-0 timeline-dot">1-3年</div>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-[#5D4037]">深耕期 · HR通才</h4>
+                                    <p class="text-[#8D6E63] text-sm mt-1 leading-relaxed">在快节奏互联网或高成长型企业，深耕招聘与HRBP方向，成为「懂业务、懂人性、懂数据」的HR通才，积累全模块经验。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 group">
+                                <div class="w-12 h-12 rounded-full bg-[#E8F5E9] flex items-center justify-center text-[#87A878] font-bold shrink-0 timeline-dot">3-5年</div>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-[#5D4037]">进阶期 · 战略伙伴</h4>
+                                    <p class="text-[#8D6E63] text-sm mt-1 leading-relaxed">向HRBP或招聘负责人进阶，能独立搭建团队、设计人才供应链，成为业务部门的战略合作伙伴，而不仅仅是支持部门。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 group">
+                                <div class="w-12 h-12 rounded-full bg-[#FFF3E0] flex items-center justify-center text-[#E76F51] font-bold shrink-0 timeline-dot">长期</div>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-[#5D4037]">愿景 · 产品化HR</h4>
+                                    <p class="text-[#8D6E63] text-sm mt-1 leading-relaxed">成为一个「有产品思维的HR」。未来的人力资源一定更数字化、更体验化，我希望既能懂组织发展的大逻辑，又能用设计思维优化每一个员工触点。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities Cloud -->
+    <section class="py-24 bg-[#FDF8F3]/50 relative" id="capabilities">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="font-serif-cn text-3xl md:text-4xl font-bold mb-4 section-reveal text-[#5D4037]">
+                我的HR<span class="text-[#F4A261]">工具箱</span>
+            </h2>
+            <p class="text-[#8D6E63] mb-12 section-reveal font-wenkai">硬技能筑基，软技能点睛，工具流提效</p>
+            
+            <div class="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto section-reveal">
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#F4A261]/30 text-[#F4A261] rounded-full text-sm font-medium hover:bg-[#F4A261] hover:text-white transition-all cursor-default shadow-sm" style="--i:0">人才画像构建</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#87A878]/30 text-[#87A878] rounded-full text-sm font-medium hover:bg-[#87A878] hover:text-white transition-all cursor-default shadow-sm" style="--i:1">雇主品牌设计</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#E76F51]/30 text-[#E76F51] rounded-full text-sm font-medium hover:bg-[#E76F51] hover:text-white transition-all cursor-default shadow-sm" style="--i:2">结构化面试</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#F4A261]/30 text-[#F4A261] rounded-full text-sm font-medium hover:bg-[#F4A261] hover:text-white transition-all cursor-default shadow-sm" style="--i:3">BOSS渠道运营</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#87A878]/30 text-[#87A878] rounded-full text-sm font-medium hover:bg-[#87A878] hover:text-white transition-all cursor-default shadow-sm" style="--i:4">高情商沟通</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#E76F51]/30 text-[#E76F51] rounded-full text-sm font-medium hover:bg-[#E76F51] hover:text-white transition-all cursor-default shadow-sm" style="--i:5">多线程管理</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#F4A261]/30 text-[#F4A261] rounded-full text-sm font-medium hover:bg-[#F4A261] hover:text-white transition-all cursor-default shadow-sm" style="--i:6">SOP标准化</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#87A878]/30 text-[#87A878] rounded-full text-sm font-medium hover:bg-[#87A878] hover:text-white transition-all cursor-default shadow-sm" style="--i:7">商业敏锐度</span>
+                <span class="gentle-tag px-5 py-2.5 bg-white border border-[#E76F51]/30 text-[#E76F51] rounded-full text-sm font-medium hover:bg-[#E76F51] hover:text-white transition-all cursor-default shadow-sm" style="--i:8">用户同理心</span>
+                <span class="gentle-tag px-5 py-2.5 bg-[#F5F0E8] border border-[#8D6E63]/30 text-[#8D6E63] rounded-full text-sm font-medium hover:bg-[#8D6E63] hover:text-white transition-all cursor-default shadow-sm" style="--i:9">Excel高阶</span>
+                <span class="gentle-tag px-5 py-2.5 bg-[#F5F0E8] border border-[#8D6E63]/30 text-[#8D6E63] rounded-full text-sm font-medium hover:bg-[#8D6E63] hover:text-white transition-all cursor-default shadow-sm" style="--i:10">Python基础</span>
+                <span class="gentle-tag px-5 py-2.5 bg-[#F5F0E8] border border-[#8D6E63]/30 text-[#8D6E63] rounded-full text-sm font-medium hover:bg-[#8D6E63] hover:text-white transition-all cursor-default shadow-sm" style="--i:11">AI辅助筛选</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 relative">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <div class="soft-card p-12 border-[#F4A261]/20 bg-gradient-to-b from-white to-[#FDF8F3] section-reveal">
+                <h2 class="font-serif-cn text-4xl md:text-5xl font-bold mb-6 text-[#5D4037]">
+                    让我们一起搭建<br><span class="text-[#F4A261]">更好的组织</span>
+                </h2>
+                <p class="text-[#8D6E63] text-lg mb-8 leading-relaxed font-wenkai">
+                    如果你对HR有同样的热情，或者有适合我的机会，<br>欢迎聊聊。我期待在人与组织的交汇处，创造更多价值。
+                </p>
+                
+                <div class="mt-8 pt-8 border-t border-[#F4A261]/10 text-[#A1887F] text-sm font-wenkai">
+                    <p>微信：w15989050139 | 华南理工大学 · 金融学 · 应届</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-[#A1887F] text-sm border-t border-[#F4A261]/10 bg-white/50">
+        <p class="font-wenkai">&copy; 2026 王韬媛 Aria. 在人与组织的交汇处，种下连接的种子。</p>
+    </footer>
+
+    <script>
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero animations
+        gsap.from(".hero-title", {
+            duration: 1.2,
+            y: 40,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.2
+        });
+        
+        gsap.from(".hero-subtitle", {
+            duration: 1,
+            y: 30,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.5
+        });
+        
+        gsap.from(".hero-cta", {
+            duration: 0.8,
+            y: 20,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.8
+        });
+
+        // Section reveal animations
+        const reveals = document.querySelectorAll('.section-reveal');
+        reveals.forEach((element, index) => {
+            gsap.to(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                duration: 0.8,
+                y: 0,
+                opacity: 1,
+                ease: "power2.out",
+                delay: (index % 3) * 0.1
+            });
+        });
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            
+            ScrollTrigger.create({
+                trigger: counter,
+                start: "top 85%",
+                onEnter: () => {
+                    gsap.to(counter, {
+                        duration: 2,
+                        innerHTML: target,
+                        snap: { innerHTML: 1 },
+                        ease: "power2.out"
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
